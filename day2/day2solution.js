@@ -1,13 +1,18 @@
 var fs = require('fs'); //file system
 fs.readFile('input.txt', 'utf8', function(err, data) {
 	var packageArr = data.split('\n');
-	var totalPaper = 0;
+
+	var paper = 0;
+	var ribbon = 0;
 	for (var i = 0; i < packageArr.length; i++) {
 		var dimensions = packageArr[i].split('x');
-		var length = dimensions[0] * dimensions[1];
-		var width = dimensions[1] * dimensions[2];
-		var height = dimensions[2] * dimensions[0];
-		totalPaper += 2 * (length + width + height) + Math.min(length, width, height);
+		var l = parseInt(dimensions[0]);
+		var w = parseInt(dimensions[1]);
+		var h = parseInt(dimensions[2]);
+		//find the amount of wrapping paper
+		paper += 2 * (l * w + w * h + h * l) + Math.min(l * w, w * h, h * l);
+		//find the amount of ribbon
+		ribbon += 2 * ((l + w + h) - Math.max(l, w, h)) + l * w * h;
 	}
-	console.log(totalPaper);
+	console.log(paper + " " + ribbon);
 })
