@@ -2,20 +2,47 @@ var fs = require('fs');
 
 fs.readFile('input.txt', 'utf8', function(err, data) {
     var housesVisited = new Set();
-    housesVisited.add('00');
-    var currentHouse = [0, 0];
+    //var roboSantaHousesVisited = new Set();
+    housesVisited.add('0,0');
+    //roboSantaHousesVisited.add('00');
+    var roboVsSanta = 0;
+    var santaCurrentHouse = [0, 0];
+    var roboCurrentHouse = [0, 0];
     for (var i = 0; i < data.length; i++) {
-        if (data[i] === '>') {
-            currentHouse[0]++;
-        } else if (data[i] === '<') {
-            currentHouse[0]--;
-        } else if (data[i] === '^') {
-            currentHouse[1]++;
+        //var currentHouse;
+        if (roboVsSanta % 2 === 0) {
+            switch (data[i]) {
+                case '>':
+                    roboCurrentHouse[0]++;
+                    break;
+                case '<':
+                    roboCurrentHouse[0]--;
+                    break;
+                case '^':
+                    roboCurrentHouse[1]++;
+                    break;
+                default:
+                    roboCurrentHouse[1]--;
+            }
+            housesVisited.add(roboCurrentHouse.join(','));
         } else {
-            currentHouse[1]--;
+            switch (data[i]) {
+                case '>':
+                    santaCurrentHouse[0]++;
+                    break;
+                case '<':
+                    santaCurrentHouse[0]--;
+                    break;
+                case '^':
+                    santaCurrentHouse[1]++;
+                    break;
+                default:
+                    santaCurrentHouse[1]--;
+            }
+            housesVisited.add(santaCurrentHouse.join(','));
         }
-        var stringHouse = currentHouse.join('');
-        housesVisited.add(stringHouse);
+        roboVsSanta++;
     }
-    console.log(housesVisited.size);
+    console.log('total was ' + housesVisited.size);
+
 })
