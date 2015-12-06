@@ -4,7 +4,7 @@ function findHash() {
     var input = 'iwrupvqb';
     var count = 0;
     while (true) {
-        if (md5(input + count).slice(0, 5) === '00000') {
+        if (md5(input + count).slice(0, 6) === '000000') {
             break;
         }
         count++
