@@ -1,5 +1,6 @@
 var fs = require('fs');
 
+//Part one
 fs.readFile('input.txt', 'utf8', function(err, data) {
     var str = data.split('\n');
     var niceSrings = 0;
@@ -28,4 +29,29 @@ fs.readFile('input.txt', 'utf8', function(err, data) {
     console.log(niceSrings);
     console.log(str.length);
 
+})
+
+//Part two
+fs.readFile('input.txt', 'utf8', function(err, data) {
+    var str = data.split('\n');
+    var niceStrings = 0;
+    for (var i = 0; i < str.length; i++) {
+        var matchingLetters = false;
+        var letterPair = false;
+        for (var j = 0; j < str[i].length; j++) {
+            if (str[i][j] === str[i][j + 2]) {
+                matchingLetters = true;
+            }
+            var testString = str[i].substr(j, 2);
+            var remainderString = str[i].substr(j + 2);
+            if (remainderString.indexOf(testString) != -1) {
+                letterPair = true;
+            }
+        }
+
+        if (matchingLetters && letterPair) {
+            niceStrings++;
+        };
+    }
+    console.log(niceStrings);
 })
