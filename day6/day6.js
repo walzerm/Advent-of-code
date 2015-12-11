@@ -6,10 +6,9 @@ fs.readFile('input.txt', 'utf8', function(err, data) {
     for (var i = 0; i < 1000; i++) {
         lights.push([]);
         for (var j = 0; j < 1000; j++) {
-            lights[i].push(false);
+            lights[i].push(0);
         }
     }
-
     for (var k = 0; k < instructionLines.length - 1; k++) {
         var indivInstruction = instructionLines[k].split(' ');
         var coordinates = [];
@@ -22,11 +21,12 @@ fs.readFile('input.txt', 'utf8', function(err, data) {
             var j_right = parseInt(coordinates[1][0]);
             for (var i = i_left; i <= i_right; i++) {
                 for (var j = j_left; j <= j_right; j++) {
-                    if (!lights[i][j]) {
+                    /*if (!lights[i][j]) {
                         lights[i][j] = true;
                     } else {
                         lights[i][j] = false;
-                    }
+                    }*/
+                    lights[i][j]+= 2;
                 }
             }
         } else {
@@ -39,22 +39,22 @@ fs.readFile('input.txt', 'utf8', function(err, data) {
             for (var i = i_left; i <= i_right; i++) {
                 for (var j = j_left; j <= j_right; j++) {
                     if (indivInstruction[1] === "on") {
-                        lights[i][j] = true;
+                        lights[i][j]++;
                     } else {
-                        lights[i][j] = false;
+                        if (lights[i][j] > 0) {
+                            lights[i][j]--;
+                        }
                     }
                 }
             }
         }
     }
-    var lightsOn = 0;
+    var totalBrightness = 0;
     for (var i = 0; i < lights.length; i++) {
         for (var j = 0; j < lights[i].length; j++) {
-            if (lights[i][j]) {
-                lightsOn++;
-            }
+            totalBrightness+= lights[i][j];
         }
     }
-console.log(lightsOn);
+console.log(totalBrightness);
 
 })
